@@ -18,8 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Profile("production")
 public class S3Service {
 
-    @Value("${amazon.s3.region:us-east-1}")
-    private String REGION;
+    @Value("${amazon.s3.region}")
+    private String REGION="us-east-1";
 
     public static AmazonS3 s3;
 
