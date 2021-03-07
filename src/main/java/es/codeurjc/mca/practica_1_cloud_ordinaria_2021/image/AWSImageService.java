@@ -31,7 +31,7 @@ public class AWSImageService implements ImageService {
     public String createImage(MultipartFile multiPartFile) throws IOException {
         s3service.createBucketIfNotExists(BUCKET_NAME);
         s3service.uploadFile(BUCKET_NAME, multiPartFile);
-        return BUCKET_NAME+"/"+multiPartFile.getOriginalFilename();
+        return multiPartFile.getOriginalFilename();
     }
 
     @Override
