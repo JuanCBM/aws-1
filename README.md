@@ -1,19 +1,47 @@
-# aws-1
+<h1 align="center">Práctica 1. Despliegue de una aplicación Spring 👨🏻‍💻 </h1>
 
-#Comandos a tener en cuenta, en un futuro generalizados
+<p align="center">
+  <a href="/docs" target="_blank">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+  </a>
+  <a href="#" target="_blank">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+  </a>
+</p>
 
--Intalar en EC2 mysql-client y realizar la conexion con password
+Proyecto para desplegar una aplicación utilizando los servicios de AWS.
 
-`mysql -h <<ENDPOINT_RDS>> -P 3306 -u admin -p`
+## Authors
 
--Copia del JAR a la carpeta interna del EC2
-`scp -i <<TU_CLAVE_PEM>> <<ARCHIVO_JAR>> <<EC2_NAME>>@<<EC2_DNS>>:<<DESTINATION_DIR_EC2>>/<<NAME_DESTINATION_JAR>>`
+👤 **JuanCBM**: Juan Carlos Blázquez Muñoz
 
+* Github: [@JuanCBM](https://github.com/JuanCBM)
 
--Nos conectamos a EC2 Y obtenemos el JAR con `wget` guardandolo en un directorio, al que accedemos y lanzamos:
+👤 **mahuerta**: Miguel Ángel Huerta Rodríguez
 
-```sudo java -jar -Dspring.profiles.active=production practica_1_cloud_ordinaria_2021-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:mysql://<<AWS_RDS_ENDPOINT>>/<<DB_INSTANCE_NAME>> --spring.datasource.username=admin --spring.datasource.password=password1 --amazon.s3.bucket-name=<<BUCKET_NAME>> --amazon.s3.endpoint=https://s3.amazonaws.com/<<BUCKET_NAME>> --amazon.s3.region=<<REGION>>```
+* Github: [@mahuerta](https://github.com/mahuerta)
 
--Link al video de Yoputube que genera la creacion de AMI image of EC2
+# Sobre la aplicación
+- Adjuntamos el material de la presentación en la raíz del proyecto `presentacion_aws.pptx`
+- Adjuntamos el vídeo de youtube donde explicamos la práctica XXXXXXXXXXXXX
 
+# Comandos a tener en cuenta
+- Instalaciones al acceder por primera vez a la instancia EC2
+> sudo apt-get update
+
+> sudo apt install -y openjdk-11-jdk
+
+> java -version
+- Instalar en EC2 mysql-client y realizar la conexión con password
+> sudo apt-get install mysql-client
+
+> mysql -h <ENDPOINT_RDS> -P 3306 -u admin -p
+
+- Copia del JAR a la carpeta interna del EC2 
+> scp -i <CLAVE_PEM> <NAME_ORIGIN_JAR> <EC2_NAME>@<EC2_DNS>:<DESTINATION_DIR_EC2>/<NAME_DESTINATION_JAR>
+
+- Despliegue de la aplicación
+> java -jar -Dspring.profiles.active=production target/jcblazquez-mahuerta-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:mysql://<RDS_ENDPOINT>/<DATABASE_NAME> --spring.datasource.username=admin --spring.datasource.password=password1 --amazon.s3.bucket-name=<BUCKET_NAME> --amazon.s3.endpoint=<S3_ENDPOINT> --amazon.s3.region=a<S3_REGION>
+
+- Fuentes adicionales: Creación de imagen AMI de EC2
 https://www.youtube.com/watch?v=kkdr8Av2cQQ
