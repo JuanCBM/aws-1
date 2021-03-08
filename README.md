@@ -45,3 +45,55 @@ Proyecto para desplegar una aplicación utilizando los servicios de AWS.
 
 - Fuentes adicionales: Creación de imagen AMI de EC2
 https://www.youtube.com/watch?v=kkdr8Av2cQQ
+https://gist.github.com/marlonbernardes/eef26b818270ef3b6d02
+
+
+
+## Intento de ejecución del script al arrancar
+Creación del script para ejecución de la app al desplegar:
+
+1) Creación de los scripts de inicio y parada de la aplicación.
+- Ejemplo:
+### demo-start.sh
+```sh
+#!/bin/bash
+cd /home/ubuntu/awsDemo/
+java -jar -Dspring.profiles.active=production target/jcblazquez-mahuerta-0.0.1-SNAPSHOT.jar --spring.datasource.url=jdbc:mysql://<RDS_ENDPOINT>/<DATABASE_NAME> --spring.datasource.username=admin --spring.datasource.password=password1 --amazon.s3.bucket-name=<BUCKET_NAME> --amazon.s3.endpoint=<S3_ENDPOINT> --amazon.s3.region=a<S3_REGION>
+```
+
+### demo-stop.sh
+```sh
+#!/bin/bash
+sudo fuser 8443/tcp -k || true
+```
+
+2) Create a file named `demo` inside /etc/init.d/
+```sh
+#!/bin/bash
+
+case $1 in
+    start)
+        /bin/bash /home/ubuntu/scripts/demo-start.sh
+    ;;
+    stop)
+        /bin/bash /home/ubuntu/scripts/demo-stop.sh  
+    ;;
+    restart)
+        /bin/bash /home/ubuntu/scripts/demo-stop.sh
+        /bin/bash /home/ubuntu/scripts/demo-start.sh
+    ;;
+esac
+exit 0
+```
+
+3) Mark `demo` as executable:
+```sh
+cd /etc/init.d/
+sudo chmod +x demo 
+```
+
+4) Make the script start on boot:
+
+```
+sudo systemctl start demo
+```
